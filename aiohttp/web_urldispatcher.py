@@ -140,6 +140,8 @@ class AbstractRoute(abc.ABC):
         assert callable(handler), handler
         if asyncio.iscoroutinefunction(handler):
             pass
+        elif asyncio.iscoroutinefunction(getattr(handler, "__call__", None)):
+            pass
         elif inspect.isgeneratorfunction(handler):
             warnings.warn("Bare generators are deprecated, "
                           "use @coroutine wrapper", DeprecationWarning)
